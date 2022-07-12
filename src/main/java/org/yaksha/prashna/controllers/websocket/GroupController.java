@@ -21,7 +21,7 @@ public class GroupController {
 
     @MessageMapping("/yakshaprashna/{groupId}")
     public void groupHandler(@DestinationVariable("groupId") String groupId, GroupMessage group) {
-        log.debug("Got message to topic", group);
+        log.debug("Got message to topic: {}", group);
 
         if (groupService.getGroupById(groupId) == null) {
             return;
@@ -45,9 +45,10 @@ public class GroupController {
     public void joinGroup(GroupMessage groupMessage) {
         try {
             groupService.joinGroup(groupMessage);
+            log.debug("Broadcasting user joined event to all the subscribers of group: {},message :{}", groupMessage.getGroupId(), groupMessage);
             simpleMessageTemplate.convertAndSend("/topic/group/" + groupMessage.getGroupId(), groupMessage);
         } catch (Exception exception) {
-            log.error("Exception while joining group: {} user: {}", groupMessage.getGroupId(), groupMessage.getFromUser());
+            log.error("Exception :{} while joining group: {} user: {} ", exception.getLocalizedMessage(), groupMessage.getGroupId(), groupMessage.getFromUser());
         }
 
     }

@@ -28,4 +28,8 @@ public class UserService {
         log.debug("Creating a user object for user name:{}", userName);
         return CachedUser.builder().userName(userName).build();
     }
+    public CachedUser getUserById(String userName){
+        log.debug("Getting user by user name:{}",userName);
+        return userCache.get(userName,CachedUser.class);
+    }
 }
