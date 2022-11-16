@@ -54,9 +54,7 @@ public class GroupService {
 
     public void joinGroup(@NonNull GroupMessage groupMessage) {
 
-        if (groupMessage.getGroupId() == null || groupMessage.getGroupId().equalsIgnoreCase("")) {
-            log.warn("Group Id is null.");
-        }
+
         Object lockObject = groupsConcurrentLocks.get(groupMessage.getGroupId());
         if (lockObject == null) {
             log.error("Can not lock the group for update");
