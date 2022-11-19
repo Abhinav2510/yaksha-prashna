@@ -1,24 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import VueRouter from 'vue-router'
-import CreateJoinComponent from './components/CreateJoinComponent'
-import StartQuiz from './components/StartQuiz'
 import { uniqueUsernameGenerator, adjectives, nouns } from 'unique-username-generator';
+
+import { createRouter } from './components/router/router'
 
 import webstomp from 'webstomp-client';
 import SockJS from 'sockjs-client'
 
-
-//router 
-const routes = [
-  { path: '/', component: CreateJoinComponent,title:"Home" },
-  { path: '/startQuiz/:groupId', name: 'startQuiz', component: StartQuiz },
-  { path: '/home', component: CreateJoinComponent }
-]
-const router = new VueRouter({ routes });
-Vue.config.productionTip = false
-Vue.use(VueRouter);
+Vue.config.productionTip = false;
 
 //global data
 //stomp
@@ -48,5 +38,5 @@ new Vue({
   vuetify,
   el: '#app',
   render: h => h(App),
-  router: router
+  router: createRouter()
 }).$mount('#app')
